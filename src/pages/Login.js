@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from "prop-types";
 
 class Login extends React.Component {
   state = {
@@ -6,6 +7,12 @@ class Login extends React.Component {
     password: '',
     errors: {}
   }
+
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
 
   formValidation = () => {
     const { email, password } = this.state
@@ -31,13 +38,16 @@ class Login extends React.Component {
   }
 
   handleSubmit = (e) => {
+    const { history } = this.props;
     const { email, password } = this.state
     e.preventDefault()
     let isValid = this.formValidation()
     if (isValid) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password)
+       history.push("/");
     }
+
   }
 
   render() {
