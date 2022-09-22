@@ -7,7 +7,7 @@ import PokeList from './pages/PokeList';
 
 function App() {
   function logout() {
-    localStorage.removeItem('token')
+    localStorage.removeItem('email')
   }
 
   return (
@@ -24,11 +24,11 @@ function App() {
           </button>
         </ul>
       </nav>
-
+      <Switch>
         <Route exact path="/" component={PokeList} />
         <Route exact path="/login" component={Login} />
-
         <Route exact path="/pokemon/:name" component={PokePage}/>
+        </Switch> 
     </Router>
   );
 }

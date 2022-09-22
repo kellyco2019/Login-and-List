@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 
-function Pokemon({ name}) {
+function Pokemon({ name }) {
   return (
     <div>
       <h2>{name}</h2>
-      <Link to={`/pokemon/${name}`}>Ver más</Link> 
+      <Link to={`/pokemon/${name}`}>Ver más</Link>
     </div>
   )
 }
