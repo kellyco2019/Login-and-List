@@ -45,7 +45,7 @@ class Login extends React.Component {
     if (isValid) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password)
-       history.push("/");
+      history.push("/");
     }
 
   }
@@ -74,6 +74,7 @@ class Login extends React.Component {
           value={password}
         />
         <button
+          onClick={this.handleSubmit}
           type="submit"
         >
           Enviar

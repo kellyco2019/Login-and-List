@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Route , Switch , Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import './App.css';
 import React from 'react';
 import Login from './pages/Login'
@@ -9,7 +9,7 @@ function App() {
   function logout() {
     localStorage.removeItem('email')
   }
-
+   
   return (
     <Router>
       <nav>
@@ -18,8 +18,7 @@ function App() {
           <li><Link to="/login">Login</Link></li>
           <button
             type="button"
-            onClick={logout}
-          >
+            onClick={logout}>
             Logout
           </button>
         </ul>
@@ -27,8 +26,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={PokeList} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/pokemon/:name" component={PokePage}/>
-        </Switch> 
+        <Route exact path="/pokemon/:name" component={PokePage} />
+      </Switch>
     </Router>
   );
 }

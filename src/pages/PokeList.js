@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import Pokemon from "../components/Pokemon";
 import Pagination from "../components/pagination";
 import PropTypes from "prop-types";
+
 class PokeList extends React.Component {
 
   state = {
@@ -12,7 +13,7 @@ class PokeList extends React.Component {
     pokeList: [],
     currentOffset: 0,
     error: false,
-    logeado: ""
+    pokeLove: []
   }
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -20,10 +21,8 @@ class PokeList extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-
   componentDidMount() {
     this.getLogin()
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -50,7 +49,6 @@ class PokeList extends React.Component {
     }
   }
 
-
   getData = (offset) => {
     let params = {
       offset: offset,
@@ -63,7 +61,6 @@ class PokeList extends React.Component {
     })
       .then(res => {
         const { results } = res.data
-        console.log(res)
         this.setState({
           pokeList: results,
           loading: false,
@@ -91,14 +88,32 @@ class PokeList extends React.Component {
     })
 
   }
+  //favotire
+  addToFavorite = (name) => {
+    const data = this.state.pokeList.find((item) => item.name === name);
+    const filterData = this.state.pokeList.filter((item) => item.name !== name)
+    this.setState({
+      pokeLove: [...this.state.pokeLove, data],
+      pokeList: [...filterData]
+    });
+  };
+
+  deleteToFavorite = (name) => {
+    const filterData = this.state.pokeLove.filter((item) => item.name !== name);
+    const data = this.state.pokeLove.find((item) => item.name === name);
+    this.setState({ 
+      pokeLove: filterData,
+      pokeList: [...this.state.pokeList, data]
+    });
+  };
 
   render() {
-    const { pokeList, currentOffset, loading, error } = this.state;
+    const { pokeList, pokeLove, currentOffset, loading, error } = this.state;
     if (loading) return <Loading />
     if (error) return <LoadError />
     console.log(currentOffset)
-    return (
 
+    return (
       <div>
         <Pagination increment={this.increment} decrement={this.decrement} />
         <main>
@@ -106,12 +121,26 @@ class PokeList extends React.Component {
             <Pokemon
               key={name}
               name={name}
+              handleFavorite={this.addToFavorite}
             />
           ))}
         </main>
-
+        <div>
+          <h2>Favorites</h2>
+          {!!pokeLove && pokeLove.length > 0 && pokeLove.map(({ name }) => (
+            <article key={name}
+            >
+              <h2>Name: {name}</h2>
+              <button
+               onClick={() => this.deleteToFavorite(name)}
+              >
+                Delete 
+              </button>
+            </article>
+          ))
+          }
+        </div>
       </div>
-
     )
   }
 }
