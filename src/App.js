@@ -8,8 +8,9 @@ import PokeList from './pages/PokeList';
 function App() {
   function logout() {
     localStorage.removeItem('email')
+    localStorage.removeItem('password')
   }
-   
+
   return (
     <Router>
       <nav>

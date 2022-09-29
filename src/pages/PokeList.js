@@ -23,6 +23,7 @@ class PokeList extends React.Component {
 
   componentDidMount() {
     this.getLogin()
+    this.getFavorite()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -72,6 +73,12 @@ class PokeList extends React.Component {
           loading: false,
         })
       })
+    
+  }
+
+  getFavorite = () => {
+    const favorite = localStorage.getItem('favPokemon');
+    return JSON.parse(favorite)
   }
 
   increment = () => {
@@ -88,7 +95,7 @@ class PokeList extends React.Component {
     })
 
   }
-  //favotire
+  //favorite
   addToFavorite = (name) => {
     const data = this.state.pokeList.find((item) => item.name === name);
     const filterData = this.state.pokeList.filter((item) => item.name !== name)
@@ -96,6 +103,9 @@ class PokeList extends React.Component {
       pokeLove: [...this.state.pokeLove, data],
       pokeList: [...filterData]
     });
+    if (data) {
+      localStorage.setItem('favPokemon', JSON.stringify(this.state.pokeLove));
+    }
   };
 
   deleteToFavorite = (name) => {
@@ -108,10 +118,9 @@ class PokeList extends React.Component {
   };
 
   render() {
-    const { pokeList, pokeLove, currentOffset, loading, error } = this.state;
+    const { pokeList, favorite2, pokeLove, loading, error } = this.state;
     if (loading) return <Loading />
     if (error) return <LoadError />
-    console.log(currentOffset)
 
     return (
       <div>
@@ -127,10 +136,10 @@ class PokeList extends React.Component {
         </main>
         <div>
           <h2>Favorites</h2>
+
           {!!pokeLove && pokeLove.length > 0 && pokeLove.map(({ name }) => (
-            <article key={name}
-            >
-              <h2>Name: {name}</h2>
+            <article key={name}>
+              <h2>Name:{name}</h2>
               <button
                onClick={() => this.deleteToFavorite(name)}
               >
