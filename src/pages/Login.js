@@ -31,7 +31,6 @@ class Login extends React.Component {
     return isValid
   }
 
-
   handleChange = e => {
     const { name, value } = e.target
     this.setState({ [name]: value })
@@ -45,14 +44,12 @@ class Login extends React.Component {
     if (isValid) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password)
-       history.push("/");
+      history.push("/");
     }
-
   }
 
   render() {
     const { email, password, errors } = this.state
-
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="email">Email</label>
@@ -64,7 +61,6 @@ class Login extends React.Component {
           value={email}
           placeholder="name@test.com"
         />
-
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -74,13 +70,13 @@ class Login extends React.Component {
           value={password}
         />
         <button
+          onClick={this.handleSubmit}
           type="submit"
         >
           Enviar
         </button>
         {Object.keys(errors).map((key) => {
-          return <div key={key} >{errors[key]} </div>
-        }
+          return <div key={key} >{errors[key]} </div> }
         )}
       </form>
     )

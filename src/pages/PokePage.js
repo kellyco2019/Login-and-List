@@ -15,7 +15,6 @@ class PokePage extends React.Component {
     this.getPokemon();
   }
 
-
   getPokemon = () => {
     axios({
       method: 'GET',
